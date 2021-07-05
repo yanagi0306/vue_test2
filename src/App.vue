@@ -1,14 +1,9 @@
 <template>
   <div>
     <h2>ToDoリスト</h2>
-    <todo-filter @changeFilter="changeFilter"></todo-filter>
-    <todo-display
-      :todos="todos"
-      :type="type"
-      @statusChange="statusChange"
-      @del="del"
-    ></todo-display>
-    <todo-input @addTodo="addTodo"></todo-input>
+    <todo-filter></todo-filter>
+    <todo-display></todo-display>
+    <todo-input></todo-input>
   </div>
 </template>
 
@@ -22,29 +17,6 @@ export default {
     todoInput,
     todoFilter,
     TodoDisplay,
-  },
-  data() {
-    return {
-      todos: [],
-      type: 'All',
-    };
-  },
-  methods: {
-    addTodo(todo) {
-      this.todos.push({
-        name: todo,
-        status: 1,
-      });
-    },
-    changeFilter(type) {
-      this.type = type;
-    },
-    statusChange(index) {
-      this.todos[index].status++;
-    },
-    del(index) {
-      this.todos.splice(index, 1);
-    },
   },
 };
 </script>
