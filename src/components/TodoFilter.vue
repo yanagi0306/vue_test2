@@ -30,7 +30,7 @@
 export default {
   methods: {
     changeFilter(type) {
-      this.$emit('changeFilter', type);
+      this.$store.dispatch('changeFilter', type);
     },
   },
 };

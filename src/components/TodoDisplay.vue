@@ -1,54 +1,46 @@
 <template>
   <div>
-    <All
-      v-if="type === 'All'"
-      :todos="todos"
-      @statusChange="statusChange"
-      @del="del"
-      id="All"
-    ></All>
-    <Working
-      v-else-if="type === 'Working'"
-      :todos="todos"
-      @statusChange="statusChange"
-      @del="del"
-      id="Working"
-    ></Working>
-    <Done
-      v-else-if="type === 'Done'"
-      :todos="todos"
-      @statusChange="statusChange"
-      @del="del"
-      id="Done"
-    ></Done>
+    <table>
+      <tr>
+        <th>ID</th>
+        <th>コメント</th>
+        <th>状態</th>
+      </tr>
+      <tr v-for="(todo, index) in displayTodos" :key="index">
+        <td>{{ todo.id }}</td>
+        <td>{{ todo.name }}</td>
+        <button
+          v-if="todo.completed === false"
+          @click="toggleTodos(todo.id)"
+          class="button-status"
+        >
+          作業中
+        </button>
+        <button
+          v-else-if="todo.completed === true"
+          @click="toggleTodos(todo.id)"
+          class="button-status"
+        >
+          完了
+        </button>
+        <button @click="del(todo.id)" class="button-del">
+          削除
+        </button>
+      </tr>
+    </table>
   </div>
 </template>
 
 <script>
-import All from './All.vue';
-import Working from './Working.vue';
-import Done from './Done.vue';
-
+import { mapGetters } from 'vuex';
 export default {
-  components: {
-    All,
-    Working,
-    Done,
-  },
-  props: {
-    todos: {
-      type: Array,
-    },
-    type: {
-      type: String,
-    },
-  },
+  computed: mapGetters(['todos', 'displayTodos', 'type']),
   methods: {
-    statusChange(index) {
-      this.$emit('statusChange', index);
+    toggleTodos(id) {
+      this.$store.dispatch('toggleTodos', id);
     },
-    del(index) {
-      this.$emit('del', index);
+    del(id) {
+      this.$store.dispatch('del', id);
     },
   },
 };

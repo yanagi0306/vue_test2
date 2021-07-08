@@ -8,16 +8,22 @@
   </div>
 </template>
 <script>
+import { mapGetters } from 'vuex';
 export default {
   data() {
     return {
       todo: '',
     };
   },
+  computed: mapGetters(['todos']),
   methods: {
     addTodo() {
       if (this.todo != '') {
-        this.$emit('addTodo', this.todo);
+        this.$store.dispatch('addTodo', {
+          name: this.todo,
+          completed: false,
+          id: this.todos.length,
+        });
         this.todo = '';
       }
     },
