@@ -12,18 +12,18 @@
         <button
           v-if="todo.completed === false"
           @click="toggleTodos(todo.id)"
-          class="button-status"
+          class="working"
         >
           作業中
         </button>
         <button
           v-else-if="todo.completed === true"
           @click="toggleTodos(todo.id)"
-          class="button-status"
+          class="done"
         >
           完了
         </button>
-        <button @click="del(todo.id)" class="button-del">
+        <button @click="del(todo.id)" class="del">
           削除
         </button>
       </tr>
@@ -34,7 +34,7 @@
 <script>
 import { mapGetters } from 'vuex';
 export default {
-  computed: mapGetters(['todos', 'displayTodos', 'type']),
+  computed: mapGetters(['displayTodos']),
   methods: {
     toggleTodos(id) {
       this.$store.dispatch('toggleTodos', id);
